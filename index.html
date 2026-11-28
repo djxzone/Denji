@@ -250,6 +250,31 @@ footer .fcl{width:64px;height:3px;border-radius:9px;background:linear-gradient(9
 footer p{margin:6px 0 0;font-size:15px;font-weight:700;color:var(--tx)}
 footer small{letter-spacing:.3em;font-size:11px;color:var(--mut)}
 .mp{margin-bottom:34px}
+/* بحث المشغل */
+.mp .sb{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:5px 5px 5px 14px;border-radius:99px;border:1px solid var(--line);background:color-mix(in srgb,var(--bg2) 70%,transparent);transition:.2s}
+.mp .sb:focus-within{border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 14%,transparent)}
+.mp .sb>svg{flex:none;width:19px;height:19px;stroke:var(--mut);fill:none;stroke-width:2;stroke-linecap:round}
+.mp .sb input{flex:1;min-width:0;border:0;background:none;outline:0;color:var(--tx);font:inherit;font-size:15px;padding:9px 2px;-webkit-appearance:none;appearance:none}
+.mp .sb input::placeholder{color:var(--mut)}
+.mp .sb input::-webkit-search-cancel-button{display:none}
+.mp .sb button.go{flex:none;display:block;padding:9px 18px;border-radius:99px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:var(--ink);font-weight:800;font-size:14px}
+.mp .sb button.go:hover{color:var(--ink);transform:scale(1.04)}
+.mp .sb.ld button.go{opacity:.55;pointer-events:none}
+.mp .sr{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;font-size:13px;color:var(--mut)}
+.mp .sr:not(:has(#mssav:not([hidden]))):has(#sm:empty){display:none}
+.mp .sr button{display:block;padding:5px 12px;border:1px solid var(--line);border-radius:99px;color:var(--tx);font-weight:700;font-size:12.5px;flex:none}
+.mp .sr button[hidden]{display:none}
+.mp .rl{display:none;margin:0 0 14px;padding:6px;max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:16px;list-style:none;background:color-mix(in srgb,var(--bg2) 55%,transparent)}.mp .rl.on{display:block;animation:fu .3s}
+.mp .rl li{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;cursor:pointer;transition:.2s}
+.mp .rl li:hover{background:color-mix(in srgb,var(--ac) 10%,transparent)}
+.mp .rl li.cur{background:color-mix(in srgb,var(--ac) 16%,transparent)}
+.mp .rl img,.mp .rl li>i{flex:none;width:44px;height:44px;border-radius:10px;object-fit:cover;background:var(--bg2);display:grid;place-items:center;font-style:normal;color:var(--mut)}
+.mp .rl li>span{flex:1;min-width:0;display:block}
+.mp .rl li b{display:block;font-size:14.5px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:start}
+.mp .rl li.cur b{color:var(--ac)}
+.mp .rl li small{display:block;font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:start}
+.mp .rl li em{flex:none;font-style:normal;font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+
 @media(min-width:900px){footer{padding-bottom:110px}html[dir] .hl .logo{margin:0 auto 18px}html[dir] .hl .cap{margin-inline:auto;text-align:center}}
 </style></head><body>
 <div class="aur"><i></i><i></i><i></i></div><canvas id="stars"></canvas><div id="bar"></div>
@@ -308,6 +333,9 @@ footer small{letter-spacing:.3em;font-size:11px;color:var(--mut)}
 <section id="info" data-pg="info"><div class="card rv"><h2 data-i="ic"></h2><br><div class="tabs" id="tb"></div><div id="tp"></div></div></section>
 
 <div class="mp" id="mp" aria-label="music player">
+<div class="sb" id="sb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="sq" type="search" dir="auto" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120" data-p="msp"><button class="go" id="sg" type="button" data-i="msb"></button></div>
+<div class="sr"><span id="sm"></span><button id="mssav" type="button" hidden data-i="msv"></button></div>
+<ul class="rl" id="rl"></ul>
 <div class="mh"><div class="mt"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></i><div><b id="mpn">—</b><small id="mpc"></small></div></div>
 <button class="qb" id="mpq" type="button"><span id="mpql">Playing queue</span><svg viewBox="0 0 24 24"><path d="M3 6h13M3 12h13M3 18h7"/><path d="M19 15V6l3 1" /><circle cx="17" cy="16" r="2.2"/></svg></button></div>
 <div class="pr"><span id="mpa">00:00</span><input type="range" id="mps" min="0" max="1000" value="0" step="1"><span id="mpd">00:00</span></div>
@@ -360,7 +388,7 @@ tut:["اضغط النقاط الثلاث واختر «الأجهزة المرت�
 ph:{app:"واتساب",menu:["مجموعة جديدة","الأجهزة المرتبطة","الإعدادات"],ld:"الأجهزة المرتبطة",ldt:"استخدم واتساب على أجهزة أخرى",lb:"ربط جهاز",alt:"الربط برقم الهاتف بدلاً من ذلك",enter:"أدخل كود الربط",hint:"الكود المكوّن من 8 خانات",linking:"جارٍ الربط…",ok:"تم ربط الجهاز",act:"نشط الآن",scan:"امسح الرمز"},
 ft:"مميزات البوت",fe:[["⚡","تنصيب سريع","واجهة بسيطة وواضحة"],["🔑","بدون QR","ربط بكود الاقتران"],["🧩","أوامر متقدمة","مميزات متنوعة"],["🛡","حماية","تنبيهات وإرشادات"]],
 role:"مطور البوت",wa:"التواصل عبر واتساب",tg:"التواصل عبر تيليجرام",
-fq:"الأسئلة الشائعة",fsr:"ابحث في الأسئلة…",fno:"لا توجد نتيجة.",
+fq:"الأسئلة الشائعة",fsr:"ابحث في الأسئلة…",fno:"لا توجد نتيجة.",msp:"ابحث عن أغنيتك المفضلة",msb:"بحث",mss:"جاري البحث…",mso:"ما لقينا نتائج، جرّب اسم ثاني.",mse:"تعذّر البحث الآن، حاول بعد قليل.",msv:"الأغاني المحفوظة",mpr:"جاري تجهيز الأغنية…",mpt:"اكتب اسم الأغنية.",mpf:"تعذّر تجهيز هذه الأغنية، جرّب أغنية ثانية.",
 fa:[["الكود لا يعمل أو انتهت صلاحيته؟","الكود صالح لمدة قصيرة. اطلب كوداً جديداً وأدخله فوراً."],["كيف أكتب رقمي بشكل صحيح؟","اختر الدولة ثم اكتب الرقم بدون الصفر في البداية، أو الصق الرقم كاملاً بصيغة +."],["هل أحتاج مسح QR؟","لا، الربط بكود من 8 خانات فقط."],["هل يمكنني تنصيب أكثر من بوت؟","كل رقم له بوت واحد. استخدم رقماً آخر لبوت آخر."],["كيف أحذف البوت؟","من واتساب ← الأجهزة المرتبطة ← اختر الجهاز ← تسجيل الخروج."],["واتساب يرفض الكود؟","تأكد من الرقم والدولة، وانتظر دقيقة ثم اطلب كوداً جديداً. تجنب تكرار الطلب."]],
 lgt:"سجل المحاولات",lem:"لا توجد محاولات بعد.",lcl:"مسح السجل",lcode:"كود",lok:"نجاح",lerr:"فشل",
 pt:"لوحتي",ps:"الأرقام التي نصّبتها من هذا المتصفح.",pe:"لا توجد أرقام محفوظة.",rm:"إزالة",close:"إغلاق",
@@ -385,7 +413,7 @@ tut:["Tap the three dots and choose “Linked devices”","Tap “Link a device�
 ph:{app:"WhatsApp",menu:["New group","Linked devices","Settings"],ld:"Linked devices",ldt:"Use WhatsApp on other devices",lb:"Link a device",alt:"Link with phone number instead",enter:"Enter linking code",hint:"The 8-character code",linking:"Linking…",ok:"Device linked",act:"Active now",scan:"Scan the code"},
 ft:"Bot features",fe:[["⚡","Quick install","Simple, clear interface"],["🔑","No QR","Link with a pairing code"],["🧩","Advanced commands","Many features"],["🛡","Protection","Alerts and guidance"]],
 role:"Bot developer",wa:"Contact on WhatsApp",tg:"Contact on Telegram",
-fq:"FAQ",fsr:"Search questions…",fno:"No results.",
+fq:"FAQ",fsr:"Search questions…",fno:"No results.",msp:"Search for your favorite song",msb:"Search",mss:"Searching…",mso:"No results, try another name.",mse:"Search failed, try again shortly.",msv:"Saved songs",mpr:"Preparing the song…",mpt:"Type a song name.",mpf:"Couldn't prepare this song, try another.",
 fa:[["Code not working or expired?","The code is short-lived. Request a new one and enter it right away."],["How do I type my number?","Pick the country and type the number without the leading zero, or paste it with +."],["Do I need to scan a QR?","No, only an 8-character code."],["Can I install more than one bot?","One bot per number. Use another number for another bot."],["How do I remove the bot?","WhatsApp → Linked devices → pick the device → Log out."],["WhatsApp rejects the code?","Check the number and country, wait a minute, then request a new code. Avoid repeated requests."]],
 lgt:"Attempts log",lem:"No attempts yet.",lcl:"Clear log",lcode:"Code",lok:"Success",lerr:"Failed",
 pt:"My bots",ps:"Numbers you installed from this browser.",pe:"No saved numbers.",rm:"Remove",close:"Close",
@@ -596,37 +624,94 @@ const SONGS=[
 ];
 (function(){
  const g=i=>document.getElementById(i),au=g("mpau"),box=g("mp"),sl=g("mps"),vs=g("mpvs");
- let cur=0,shuf=false,rep=0,loaded=false;
+ let Q=SONGS,cur=0,shuf=false,rep=0,loaded=false,tok=0,sTok=0,msg="",silent=false,ul=false,RES=[];
+ const SIL="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=";
  const PL='<path d="M8 5v14l11-7z"/>',PA='<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
  const fm=x=>{if(!isFinite(x))x=0;x=Math.floor(x);return String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0")};
  const ar=()=>document.documentElement.lang!=="en";
  const fill=(el)=>el.style.setProperty("--p",(el.value/el.max*100)+"%");
- function lbl(){g("mpql").textContent=ar()?"قائمة التشغيل":"Playing queue";g("mpc").textContent=(cur+1)+" / "+SONGS.length}
- function list(){g("mpl").innerHTML=SONGS.map((s,i)=>`<li data-i="${i}" class="${i===cur?"cur":""}"><em>${i===cur&&!au.paused?"♪":i+1}</em><span>${s.n}</span></li>`).join("")}
- function load(i,play){cur=(i+SONGS.length)%SONGS.length;au.src=SONGS[cur].u;loaded=true;g("mpn").textContent=SONGS[cur].n;sl.value=0;fill(sl);g("mpa").textContent="00:00";g("mpd").textContent="00:00";lbl();list();if(play)au.play().catch(()=>{})}
- function toggle(){if(!loaded)load(cur,true);else au.paused?au.play().catch(()=>{}):au.pause()}
+ const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const API=()=>CONFIG.API||"";
+ const dur=v=>{v=Math.round(+v||0);return v>0?Math.floor(v/60)+":"+String(v%60).padStart(2,"0"):""};
+ const wait=ms=>new Promise(r=>setTimeout(r,ms));
+ function lbl(){g("mpql").textContent=ar()?"قائمة التشغيل":"Playing queue";g("mpc").textContent=msg||((cur+1)+" / "+Q.length);g("mssav").hidden=(Q===SONGS)}
+ function stat(x){msg=x||"";lbl()}
+ function smsg(x){g("sm").textContent=x||""}
+ function list(){g("mpl").innerHTML=Q.map((x,i)=>`<li data-i="${i}" class="${i===cur?"cur":""}"><em>${i===cur&&!au.paused&&!silent?"♪":i+1}</em><span dir="auto">${esc(x.n)}${x.a?" — "+esc(x.a):""}</span></li>`).join("")}
+ function rlist(){g("rl").innerHTML=RES.map((x,i)=>`<li data-i="${i}" class="${Q===RES&&i===cur?"cur":""}">${x.c?`<img src="${esc(x.c)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`:"<i>♪</i>"}<span><b dir="auto">${esc(x.n)}</b><small dir="auto">${esc(x.a)}</small></span><em>${dur(x.d)}</em></li>`).join("")}
+ function setSrc(u){silent=(u===SIL);au.src=u}
+ // iOS/Safari: لازم أول play يكون من لمسة المستخدم، وبعدها نقدر نشغّل الأغاني المجهّزة تلقائياً
+ function unlock(){if(ul)return;silent=true;au.src=SIL;const p=au.play();if(p&&p.catch)p.catch(()=>{})}
+ async function prep(x,my){
+  au.pause();stat(t("mpr"));
+  const t0=Date.now();
+  try{
+   for(;;){
+    let d={},ok=false;
+    try{const r=await fetch(API()+"/api/prepare?id="+encodeURIComponent(x.id));ok=r.ok;d=await r.json().catch(()=>({}))}catch(e){throw{}}
+    if(my!==tok)return;
+    if(!ok||d.status==="error")throw{srv:d.error};
+    if(d.status==="ready")break;
+    if(Date.now()-t0>120000)throw{};
+    await wait(1500);
+    if(my!==tok)return;
+   }
+   msg="";setSrc(API()+"/api/stream?id="+encodeURIComponent(x.id));loaded=true;lbl();au.play().catch(()=>{});
+  }catch(e){if(my!==tok)return;stat((e&&e.srv)||t("mpf"))}
+ }
+ function load(i,play){
+  cur=(i+Q.length)%Q.length;const x=Q[cur],my=++tok;
+  msg="";g("mpn").textContent=x.n;sl.value=0;fill(sl);g("mpa").textContent="00:00";g("mpd").textContent="00:00";
+  if(x.u){setSrc(x.u);loaded=true;lbl();list();rlist();if(play)au.play().catch(()=>{});return}
+  loaded=false;lbl();list();rlist();
+  if(!play){au.pause();return}
+  prep(x,my)}
+ function toggle(){if(!loaded){unlock();load(cur,true)}else au.paused?au.play().catch(()=>{}):au.pause()}
  function next(auto){
-  if(shuf&&SONGS.length>1){let n;do{n=Math.floor(Math.random()*SONGS.length)}while(n===cur);return load(n,true)}
-  if(auto&&rep===0&&cur===SONGS.length-1){au.pause();return load(0,false)}
+  if(shuf&&Q.length>1){let n;do{n=Math.floor(Math.random()*Q.length)}while(n===cur);return load(n,true)}
+  if(auto&&rep===0&&cur===Q.length-1){au.pause();return load(0,false)}
   load(cur+1,true)}
+ // ---------- البحث (مثل أمر .سبوتي بالبوت) ----------
+ async function doSearch(){
+  const q=g("sq").value.trim();
+  if(q.length<2){smsg(t("mpt"));return}
+  const my=++sTok;smsg(t("mss"));g("sb").classList.add("ld");g("rl").classList.remove("on");
+  try{
+   let d={},ok=false;
+   try{const r=await fetch(API()+"/api/search?q="+encodeURIComponent(q));ok=r.ok;d=await r.json().catch(()=>({}))}catch(e){throw{}}
+   if(my!==sTok)return;
+   if(!ok||!d.ok)throw{srv:d.error};
+   RES=(Array.isArray(d.items)?d.items:[]).map(x=>({id:x.id,n:x.title,a:x.artist,c:x.cover,d:x.duration}));
+   rlist();
+   if(!RES.length){smsg(t("mso"));return}
+   smsg("");g("rl").scrollTop=0;g("rl").classList.add("on");
+  }catch(e){if(my!==sTok)return;RES=[];rlist();smsg((e&&e.srv)||t("mse"))}
+  finally{if(my===sTok)g("sb").classList.remove("ld")}
+ }
+ g("sg").onclick=doSearch;
+ g("sq").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();doSearch();g("sq").blur()}};
+ g("sq").oninput=function(){if(!this.value.trim()){sTok++;smsg("");g("sb").classList.remove("ld");g("rl").classList.remove("on")}};
+ g("rl").onclick=e=>{const li=e.target.closest("li");if(!li||!RES[+li.dataset.i])return;const i=+li.dataset.i;unlock();
+  if(Q!==RES){Q=RES;load(i,true)}else if(i===cur&&loaded)toggle();else load(i,true)};
+ g("mssav").onclick=()=>{unlock();Q=SONGS;load(0,true)};
  g("mpn").textContent=SONGS[0].n;lbl();list();fill(sl);fill(vs);
  g("mpp").onclick=toggle;
- g("mpx").onclick=()=>next(false);
- g("mpv").onclick=()=>{if(au.currentTime>3)au.currentTime=0;else load(cur-1,!au.paused&&loaded)};
+ g("mpx").onclick=()=>{unlock();next(false)};
+ g("mpv").onclick=()=>{unlock();load(cur-1,true)};
  g("mpb").onclick=()=>{au.currentTime=Math.max(0,au.currentTime-10)};
  g("mph").onclick=function(){shuf=!shuf;this.classList.toggle("on",shuf)};
  g("mpr").onclick=function(){rep=(rep+1)%3;this.classList.toggle("on",rep>0);g("mp1").style.display=rep===2?"":"none"};
  g("mpq").onclick=()=>g("mpl").classList.toggle("on");
  g("mpm").onclick=function(){g("mpvl").classList.toggle("on");this.classList.toggle("on")};
- g("mpl").onclick=e=>{const li=e.target.closest("li");if(!li)return;const i=+li.dataset.i;i===cur&&loaded?toggle():load(i,true)};
+ g("mpl").onclick=e=>{const li=e.target.closest("li");if(!li)return;const i=+li.dataset.i;unlock();i===cur&&loaded?toggle():load(i,true)};
  vs.oninput=()=>{au.volume=vs.value/100;fill(vs)};
  sl.oninput=()=>{fill(sl);if(isFinite(au.duration))au.currentTime=sl.value/1000*au.duration};
- au.onloadedmetadata=()=>{g("mpd").textContent=fm(au.duration)};
- au.ontimeupdate=()=>{if(!isFinite(au.duration)||document.activeElement===sl&&false)return;sl.value=au.currentTime/au.duration*1000;fill(sl);g("mpa").textContent=fm(au.currentTime)};
- au.onplay=()=>{g("mpi").innerHTML=PA;box.classList.add("pl");list()};
- au.onpause=()=>{g("mpi").innerHTML=PL;box.classList.remove("pl");list()};
- au.onended=()=>{if(rep===2){au.currentTime=0;au.play()}else next(true)};
- au.onerror=()=>{if(loaded&&au.src)g("mpc").textContent=ar()?"تعذّر تشغيل الأغنية":"Can't play this track"};
+ au.onloadedmetadata=()=>{if(!silent)g("mpd").textContent=fm(au.duration)};
+ au.ontimeupdate=()=>{if(silent||!isFinite(au.duration))return;sl.value=au.currentTime/au.duration*1000;fill(sl);g("mpa").textContent=fm(au.currentTime)};
+ au.onplay=()=>{ul=true;if(silent)return;g("mpi").innerHTML=PA;box.classList.add("pl");list()};
+ au.onpause=()=>{if(silent)return;g("mpi").innerHTML=PL;box.classList.remove("pl");list()};
+ au.onended=()=>{if(silent)return;if(rep===2){au.currentTime=0;au.play()}else next(true)};
+ au.onerror=()=>{if(silent)return;if(loaded&&au.src)stat(ar()?"تعذّر تشغيل الأغنية":"Can't play this track")};
  new MutationObserver(lbl).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 })();
 </script></body></html>
